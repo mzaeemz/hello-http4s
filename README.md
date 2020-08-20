@@ -14,3 +14,6 @@ For Hello Message visit:
 
 For a Dad Joke visit:
 > localhost:8080/joke
+
+For a Random Dumb Trump Qoute visit:
+> localhost:8080/quote

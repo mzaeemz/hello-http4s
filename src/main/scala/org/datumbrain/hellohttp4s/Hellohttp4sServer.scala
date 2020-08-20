@@ -16,6 +16,7 @@ object Hellohttp4sServer {
       client <- BlazeClientBuilder[F](global).stream
       helloWorldAlg = HelloWorld.impl[F]
       jokeAlg = Jokes.impl[F](client)
+      qouteAlg = TrumpQuotes.impl[F](client)
 
       // Combine Service Routes into an HttpApp.
       // Can also be done via a Router if you
@@ -23,7 +24,8 @@ object Hellohttp4sServer {
       // in the underlying routes.
       httpApp = (
         Hellohttp4sRoutes.helloWorldRoutes[F](helloWorldAlg) <+>
-        Hellohttp4sRoutes.jokeRoutes[F](jokeAlg)
+        Hellohttp4sRoutes.jokeRoutes[F](jokeAlg) <+>
+        Hellohttp4sRoutes.quoteRoutes[F](qouteAlg)
       ).orNotFound
 
       // With Middlewares in place

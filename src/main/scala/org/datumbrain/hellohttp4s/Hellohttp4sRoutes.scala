@@ -19,6 +19,18 @@ object Hellohttp4sRoutes {
     }
   }
 
+  def quoteRoutes[F[_]: Sync](Q: TrumpQuotes[F]): HttpRoutes[F] = {
+    val dsl = new Http4sDsl[F]{}
+    import dsl._
+    HttpRoutes.of[F] {
+      case GET -> Root / "quote" =>
+        for {
+          qoute <- Q.get
+          resp <- Ok(qoute)
+        } yield resp
+    }
+  }
+
   def helloWorldRoutes[F[_]: Sync](H: HelloWorld[F]): HttpRoutes[F] = {
     val dsl = new Http4sDsl[F]{}
     import dsl._
